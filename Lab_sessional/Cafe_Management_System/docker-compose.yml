@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  customer-services:
+    build:
+      context: ./customer-services
+      dockerfile: Dockerfile
+    container_name: customer-services
+    ports:
+      - "3005:3005"
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+
+  inventory-services:
+    build:
+      context: ./inventory-services
+      dockerfile: Dockerfile
+    container_name: inventory-services
+    ports:
+      - "3004:3004"
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+
+  menu-services:
+    build:
+      context: ./menu-services
+      dockerfile: Dockerfile
+    container_name: menu-services
+    ports:
+      - "3001:3001"
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+
+  order-services:
+    build:
+      context: ./order-services
+      dockerfile: Dockerfile
+    container_name: order-services
+    ports:
+      - "3002:3002"
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+
+  payment-services:
+    build:
+      context: ./payment-services
+      dockerfile: Dockerfile
+    container_name: payment-services
+    ports:
+      - "3003:3003"
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
